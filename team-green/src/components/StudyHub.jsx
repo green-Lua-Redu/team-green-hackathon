@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Board from "./Board";
+import AddTaskForm from "./AddTaskForm";
+
 
 // Initial tasks are placeholders for UI development
 const initialTasks = [
@@ -17,6 +19,7 @@ export default function StudyHub() {
         <h1>StudyHub</h1>
         <p>Your weekly study tasks in one place.</p>
       </header>
+      <AddTaskForm setTasks={setTasks} />
 
       <Board tasks={tasks} setTasks={setTasks} />
     </div>
