@@ -11,3 +11,5 @@ Build a React-based project with a clear MVP and strong collaboration.
 
 ## 🧭 Status
 Project initialized. React setup coming next.
+
+

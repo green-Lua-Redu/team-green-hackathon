@@ -11,10 +11,12 @@ export default function StudyHub() {
       .then((res) => res.json())
       .then((data) => {
         const formattedTasks = data.map((m) => ({
-          id: m.id,
-          day: "Mon", // default for now
-          title: m.title,
-        }));
+  id: m.id,
+  title: m.title,
+  day: m.default_day || "Monday",
+  link: m.default_link,
+}));
+
 
         setTasks(formattedTasks);
         setLoading(false);
@@ -35,6 +37,7 @@ export default function StudyHub() {
       {loading && <p>Loading tasks...</p>}
 
       <AddTaskForm setTasks={setTasks} />
+
       <Board tasks={tasks} setTasks={setTasks} />
     </div>
   );
