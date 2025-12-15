@@ -1,17 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Board from "./Board";
 import AddTaskForm from "./AddTaskForm";
 
-
-// Initial tasks are placeholders for UI development
-const initialTasks = [
-  { id: 1, day: "Mon", title: "Finish resume" },
-  { id: 2, day: "Tue", title: "Mock interview" },
-  { id: 3, day: "Fri", title: "Submit application" },
-];
-
 export default function StudyHub() {
-  const [tasks, setTasks] = useState(initialTasks);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/materials")
+      .then((res) => res.json())
+      .then((data) => {
+        const formattedTasks = data.map((m) => ({
+          id: m.id,
+          day: "Mon", // default for now
+          title: m.title,
+        }));
+
+        setTasks(formattedTasks);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching materials:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="study-hub">
@@ -19,10 +31,11 @@ export default function StudyHub() {
         <h1>classCloud</h1>
         <p>Your weekly study tasks in one place.</p>
       </header>
-      <AddTaskForm setTasks={setTasks} />
 
+      {loading && <p>Loading tasks...</p>}
+
+      <AddTaskForm setTasks={setTasks} />
       <Board tasks={tasks} setTasks={setTasks} />
     </div>
   );
 }
-
