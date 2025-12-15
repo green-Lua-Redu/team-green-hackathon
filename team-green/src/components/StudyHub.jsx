@@ -13,12 +13,13 @@ export default function StudyHub() {
 
   return (
     <div className="study-hub">
-      <h1>Study Hub</h1>
+      <header className="study-hub-header">
+        <h1>StudyHub</h1>
+        <p>Your weekly study tasks in one place.</p>
+      </header>
 
-      <Board
-        tasks={tasks}
-        setTasks={setTasks}
-      />
+      <Board tasks={tasks} setTasks={setTasks} />
     </div>
   );
 }
+

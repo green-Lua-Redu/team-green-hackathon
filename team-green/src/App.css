@@ -1,0 +1,52 @@
+.study-hub-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.study-hub-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.study-hub-header p {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 1rem;
+}
+
+.board {
+  padding: 1.5rem;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
+
+.day-column {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 0.75rem;
+  min-height: 300px;
+}
+
+.day-column h3 {
+  text-align: center;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.task-card {
+  background-color: white;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
