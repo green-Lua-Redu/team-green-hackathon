@@ -50,3 +50,22 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
+
+.add-task-form {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.add-task-form input,
+.add-task-form select {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.add-task-form button {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
