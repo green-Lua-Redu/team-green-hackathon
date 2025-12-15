@@ -16,7 +16,7 @@ export default function StudyHub() {
   return (
     <div className="study-hub">
       <header className="study-hub-header">
-        <h1>StudyHub</h1>
+        <h1>Techtonica Study Hub</h1>
         <p>Your weekly study tasks in one place.</p>
       </header>
       <AddTaskForm setTasks={setTasks} />
