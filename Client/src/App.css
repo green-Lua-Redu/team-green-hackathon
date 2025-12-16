@@ -85,3 +85,19 @@ day-column:hover {
   border-color: #5c7cfa;
   outline: none;
 }
+
+.add-task-form button {
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: #b5c2da;
+  color: #131314;
+  border: #7886a1;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.add-task-form button:hover {
+  background: #3365a6;
+  transform: translateY(-2px);
+}
