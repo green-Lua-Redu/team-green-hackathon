@@ -1,6 +1,6 @@
 .study-hub-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .study-hub-header h1 {
@@ -12,13 +12,12 @@
 }
 
 .study-hub-header p {
-  margin-top: 0.5rem;
-  color: #666;
   margin-top: 0.75rem;
   color: #7f8c8d;
   font-size: 1.1rem;
   line-height: 1.5;
 }
+
 .board {
   padding: 2rem;
   background: #f9f9fb;
@@ -32,12 +31,14 @@
 }
 
 .day-column {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 0.75rem;
-  min-height: 300px;
+  background: linear-gradient(135deg, #b5c2da, #dbe4f3);
+  border-radius: 10px;
+  padding: 1rem;
+  min-height: 320px;
+  transition: transform 0.2s ease;
 }
-day-column:hover {
+
+.day-column:hover {
   transform: translateY(-4px);
 }
 
@@ -75,7 +76,7 @@ day-column:hover {
 .add-task-form select {
   padding: 0.6rem 0.8rem;
   font-size: 0.95rem;
-  border: 1px solid #5c7cfa;
+  border: 1px solid #ccc;
   border-radius: 6px;
   transition: border-color 0.2s ease;
 }
@@ -90,14 +91,33 @@ day-column:hover {
   padding: 0.6rem 1rem;
   font-size: 0.95rem;
   cursor: pointer;
-  background: #b5c2da;
-  color: #131314;
-  border: #7886a1;
+  background: #5c7cfa;
+  color: #fff;
+  border: none;
   border-radius: 6px;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .add-task-form button:hover {
+  background: #4c6ef5;
+  transform: translateY(-2px);
+}
+
+.add-task-form button:hover {
   background: #3365a6;
   transform: translateY(-2px);
+}
+
+/* Medium screens: stack into 2 columns */
+@media (max-width: 1024px) {
+  .board-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Small screens: stack into 1 column */
+@media (max-width: 600px) {
+  .board-grid {
+    grid-template-columns: 1fr;
+  }
 }
