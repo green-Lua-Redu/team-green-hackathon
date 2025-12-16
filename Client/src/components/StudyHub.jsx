@@ -1,26 +1,27 @@
-import { useEffect, useState } from "react";
-import Board from "./Board";
-import AddTaskForm from "./AddTaskForm";
+import { useState, useEffect } from 'react';
+import AddTaskForm from './AddTaskForm';
+import Board from './Board';
 
 export default function StudyHub() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3001/materials")
+    fetch('http://localhost:3001/materials')
       .then((res) => res.json())
       .then((data) => {
         const formattedTasks = data.map((m) => ({
           id: m.id,
-          day: "Mon", // default for now
           title: m.title,
+          day: m.default_day || 'Monday',
+          link: m.default_link,
         }));
 
         setTasks(formattedTasks);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching materials:", error);
+        console.error('Error fetching materials:', error);
         setLoading(false);
       });
   }, []);
@@ -35,7 +36,7 @@ export default function StudyHub() {
       {loading && <p>Loading tasks...</p>}
 
       <AddTaskForm setTasks={setTasks} />
-      <Board tasks={tasks} setTasks={setTasks} />
+      <Board tasks={tasks} />
     </div>
   );
 }

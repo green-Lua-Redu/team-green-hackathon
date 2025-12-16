@@ -1,73 +1,109 @@
 // server/index.js
+
 const express = require('express');
+const { Pool } = require('pg');
+const cors = require('cors');
+// Enable CORS for all routes
 
 const app = express();
 const PORT = 3001;
 
-// Middleware to parse JSON request bodies
+// Parse JSON request bodies
 app.use(express.json());
 
-// --- Example routes ---
+// PostgreSQL connection
+// This connects the server to the study_hub database
+const db = new Pool({
+  database: 'study_hub',
+});
 
-// Root route
+// --------------------
+// Basic routes
+// --------------------
+
+// Health check route
 app.get('/', (req, res) => {
   res.send('Backend is running!');
 });
 
 // Students route
+// This is still using static data
 app.get('/students', (req, res) => {
   res.json([
     { id: 1, name: 'Redu Davison ' },
     { id: 2, name: 'Luana Furtado' },
   ]);
 });
-let materials = [
-  { id: 1, title: 'Personal Growth & Feedback', category: 'Growth' },
-  { id: 2, title: '1:1s', category: 'Mentorship' },
-  {
-    id: 3,
-    title: 'Milestone Project',
-    category: 'Project',
-    platform: 'GitHub',
-  },
-  {
-    id: 4,
-    title: 'Communication Practice',
-    category: 'Practice',
-    platform: 'Slack',
-  },
-  {
-    id: 5,
-    title: 'Feedback Practice',
-    category: 'Practice',
-    platform: 'Slack',
-  },
-  { id: 6, title: 'Retro', category: 'Team Activity' },
-  { id: 7, title: 'Weekly Survey', category: 'Survey' },
-  { id: 8, title: 'Quiz', category: 'Assessment' },
-  { id: 9, title: 'Checklist Items', category: 'Checklist' },
-  { id: 10, title: 'Knowledge Checks', category: 'Assessment' },
-];
+
+/* ===========================
+   MATERIALS ROUTES
+   Data now comes from Postgres
+   =========================== */
 
 // Get all materials
-app.get('/materials', (req, res) => {
-  res.json(materials);
+app.get('/materials', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM materials ORDER BY id');
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching materials');
+  }
 });
 
-// Get one material by ID
-app.get('/materials/:id', (req, res) => {
-  const material = materials.find((m) => m.id === parseInt(req.params.id));
-  material ? res.json(material) : res.status(404).send('Material not found');
+// Get one material by id
+app.get('/materials/:id', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM materials WHERE id = $1', [
+      req.params.id,
+    ]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).send('Material not found');
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching material');
+  }
 });
 
-// Add new material
-app.post('/materials', (req, res) => {
-  const newMaterial = { id: materials.length + 1, ...req.body };
-  materials.push(newMaterial);
-  res.status(201).json(newMaterial);
+// Create a new material
+app.post('/materials', async (req, res) => {
+  const {
+    title,
+    category,
+    default_link,
+    is_recurring,
+    default_day,
+    recurrence_pattern,
+  } = req.body;
+
+  try {
+    const result = await db.query(
+      `INSERT INTO materials
+       (title, category, default_link, is_recurring, default_day, recurrence_pattern)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING *`,
+      [
+        title,
+        category,
+        default_link,
+        is_recurring,
+        default_day,
+        recurrence_pattern,
+      ]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error creating material');
+  }
 });
 
-// --- Start server ---
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
 });
