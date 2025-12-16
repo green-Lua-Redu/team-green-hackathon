@@ -43,16 +43,20 @@ day-column:hover {
 
 .day-column h3 {
   text-align: center;
-  margin-bottom: 0.75rem;
-  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #34495e;
 }
 
 .task-card {
-  background: linear-gradient(135deg, #b5c2da, #dbe4f3);
-  border-radius: 10px;
-  padding: 1rem;
-  min-height: 320px;
-  transition: transform 0.2s ease;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
 }
 
 .task-card:hover {
