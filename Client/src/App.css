@@ -16,10 +16,16 @@
   margin-top: 0.5rem;
   color: #666;
   font-size: 1rem;
+  margin-top: 0.75rem;
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  line-height: 1.5;
 }
-
 .board {
   padding: 1.5rem;
+  padding: 2rem;
+  background: #f9f9fb;
+  border-radius: 12px;
 }
 
 .board-grid {
