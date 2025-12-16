@@ -2,23 +2,45 @@ import { useState } from "react";
 
 export default function AddTaskForm({ setTasks }) {
   const [title, setTitle] = useState("");
-  const [day, setDay] = useState("Mon");
+  const [day, setDay] = useState("Monday");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (!title.trim()) return;
 
-    const newTask = {
-      id: Date.now(),
+    const newMaterial = {
       title,
-      day,
+      category: "manual",
+      default_day: day,
     };
 
-    setTasks(prevTasks => [...prevTasks, newTask]);
+    try {
+      const res = await fetch("http://localhost:3001/materials", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newMaterial),
+      });
 
-    setTitle("");
-    setDay("Mon");
+      const saved = await res.json();
+
+      setTasks((prevTasks) => [
+        ...prevTasks,
+        {
+          id: saved.id,
+          title: saved.title,
+          day: saved.default_day || "Monday",
+          link: saved.default_link,
+        },
+      ]);
+
+      setTitle("");
+      setDay("Monday");
+    } catch (error) {
+      console.error("Error saving task:", error);
+    }
   }
 
   return (
@@ -27,18 +49,16 @@ export default function AddTaskForm({ setTasks }) {
         type="text"
         placeholder="Add a study task"
         value={title}
-        onChange={e => setTitle(e.target.value)}
+        onChange={(e) => setTitle(e.target.value)}
+        required
       />
 
-      <select
-        value={day}
-        onChange={e => setDay(e.target.value)}
-      >
-        <option value="Mon">Mon</option>
-        <option value="Tue">Tue</option>
-        <option value="Wed">Wed</option>
-        <option value="Thu">Thu</option>
-        <option value="Fri">Fri</option>
+      <select value={day} onChange={(e) => setDay(e.target.value)}>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
       </select>
 
       <button type="submit">Add</button>
