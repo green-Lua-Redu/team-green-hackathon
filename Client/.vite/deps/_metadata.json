@@ -1,8 +1,15 @@
 {
+<<<<<<< HEAD
   "hash": "f52e3cbf",
   "configHash": "ff80299a",
   "lockfileHash": "11fe8999",
   "browserHash": "658abdd3",
+=======
+  "hash": "e9373634",
+  "configHash": "ac7e8824",
+  "lockfileHash": "7abd6259",
+  "browserHash": "6fbd5255",
+>>>>>>> 2702edb (changed the name of the folder from green team to Client)
   "optimized": {},
   "chunks": {}
 }
